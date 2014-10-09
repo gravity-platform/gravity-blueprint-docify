@@ -1,0 +1,17 @@
+nav.navbar-inverse.navbar-liquid(role="navigation")
+
+  // Brand and toggle get grouped for better mobile display
+  .navbar-header
+    button(type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse")
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand(href="#") Graviton API
+
+  // main navbar with all apis
+  .collapse.navbar-collapse.navbar-ex1-collapse
+    ul.nav.navbar-nav
+      each apiFile in files
+        li.api-nav
+          a(href="#" + apiFile)= apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)

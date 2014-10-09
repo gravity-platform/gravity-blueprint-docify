@@ -1,0 +1,5 @@
+---
+applications:
+- name: graviton-apidoc
+  buildpack: https://github.com/cloudfoundry/buildpack-nodejs.git
+  memory: 128M

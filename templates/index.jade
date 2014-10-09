@@ -1,0 +1,62 @@
+doctype
+
+html
+    head
+        meta(charset="utf-8")
+        title='API Documentation'
+        link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
+        link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css")
+        link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css")
+        link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200")
+        include _style.jade
+    body
+        div.container
+            a(name="top")
+            include _navbar.jade
+            div.container#main
+
+    script(src="//code.jquery.com/jquery-1.11.0.min.js")
+    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
+    
+    script.
+      var files = JSON.parse('!{jsonFiles}'), currentRepo = '';
+      var loadApi = function() {
+        if (currentRepo != '') {
+          currentRepo = getCurrentRepo();
+          $.get('/' + currentRepo + '/', function (response, status, xhr) {
+            var pageBody = response.substring(response.indexOf("<body>"), response.indexOf("</body>"));
+            pageBody = pageBody.replace(/href="#/g, "href=\"#" + currentRepo + "/");
+            pageBody = pageBody.replace(/href=("#.*?\/top")/g, "href=\"#top\"");
+            pageBody = pageBody.replace(/(<(h(1|2|3|4)|section) id=")/g, function(str, match) { return match +  currentRepo + "/" });
+            $('#main').html(pageBody);
+          });
+          $('li.api-nav').each(function() {
+            $(this).toggleClass('active', this.children[0].href.indexOf(currentRepo) != -1);
+          });
+        }
+      };
+      var getCurrentRepo = function() {
+        var repo = location.hash.substr(1);
+        if (repo.indexOf('/') != -1) {
+          repo = repo.substr(0, repo.indexOf('/'));
+        }
+        return repo;
+      };
+      $(document).ready(function() {
+        $(document).on('click', '.back-to-top', function() { window.scrollTo(0,0); return false; });
+
+        $(window).on('hashchange', function(e) {
+          currentRepo = getCurrentRepo();
+          if (files.indexOf(currentRepo) != -1 && location.hash.indexOf(currentRepo) != -1) {
+            loadApi();
+          }
+          if (currentRepo == "") {
+            $('#main').html("");
+          }
+        });
+
+        currentRepo = getCurrentRepo();
+        if (files.indexOf(currentRepo) != -1) {
+          loadApi();
+        }
+      });
