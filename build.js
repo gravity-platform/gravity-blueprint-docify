@@ -12,6 +12,7 @@ var fs = require('fs');
 var aglio = require('aglio');
 var jade = require('jade');
 var _ = require('lodash');
+var mkdirp = require('mkdirp');
 
 var readApiBlueprint = function (repo, callback) {
   var apiFile = __dirname + '/node_modules/' + repo + '/apiary.apib';
@@ -36,7 +37,7 @@ var renderApiBlueprint = function (repo, blueprint) {
   };
 
   aglio.render(blueprint, options, function (err, html, warnings) {
-    fs.mkdirSync(__dirname + '/build/' + repo);
+    mkdirp(__dirname + '/build/' + repo);
     fs.writeFile(__dirname + '/build/' + repo + '/index.html', html, function (err) {
       if (err) {
         console.log(err);
@@ -71,5 +72,5 @@ var findApiRepos = function(callback) {
   });
 };
 
-fs.mkdirSync(__dirname + '/build/');
+mkdirp(__dirname + '/build/');
 findApiRepos(readApiBlueprint);

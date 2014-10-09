@@ -18,6 +18,7 @@
     "graviton-api-product": "git://github.com/libgraviton/graviton-api-product#develop",
     "jade": "^1.7.0",
     "lodash": "^2.4.1",
+    "mkdirp": "^0.5.0",
     "node-fs": "^0.1.7",
     "serve-static": "^1.6.4",
     "stylus": "^0.49.1"

@@ -28,10 +28,8 @@ html
             pageBody = pageBody.replace(/href="#/g, "href=\"#" + currentRepo + "/");
             pageBody = pageBody.replace(/href=("#.*?\/top")/g, "href=\"#top\"");
             pageBody = pageBody.replace(/(<(h(1|2|3|4)|section) id=")/g, function(str, match) { return match +  currentRepo + "/" });
+            toggleNavi();
             $('#main').html(pageBody);
-          });
-          $('li.api-nav').each(function() {
-            $(this).toggleClass('active', this.children[0].href.indexOf(currentRepo) != -1);
           });
         }
       };
@@ -41,6 +39,11 @@ html
           repo = repo.substr(0, repo.indexOf('/'));
         }
         return repo;
+      };
+      var toggleNavi = function() {
+        $('li.api-nav').each(function() {
+          $(this).toggleClass('active', currentRepo != '' && this.children[0].href.indexOf(currentRepo) != -1);
+        });
       };
       $(document).ready(function() {
         $(document).on('click', '.back-to-top', function() { window.scrollTo(0,0); return false; });
@@ -52,6 +55,7 @@ html
           }
           if (currentRepo == "") {
             $('#main').html("");
+            toggleNavi();
           }
         });
 
