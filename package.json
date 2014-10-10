@@ -13,7 +13,6 @@
     "aglio": "^1.16.1",
     "async": "^0.9.0",
     "connect": "^3.2.0",
-    "graviton-api-auth": "git://github.com/libgraviton/graviton-api-auth#develop",
     "graviton-api-consultant": "git://github.com/libgraviton/graviton-api-consultant#develop",
     "graviton-api-product": "git://github.com/libgraviton/graviton-api-product#develop",
     "jade": "^1.7.0",
