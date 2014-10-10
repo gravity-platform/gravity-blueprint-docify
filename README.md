@@ -38,6 +38,8 @@ Remember to use a version higher than 1.x if the API is currently being used on
 production anywhere. You will be using this version string to convey meaning
 about any further releases as per [semver specs](http://semver.org).
 
+Add a webhook to the graviton-api-example repository and point it to ``http://graviton-apidoc.beta.scapp.io/github.hook``.
+
 Do the follwing in your working copy of this repository.
 
 ````bash
