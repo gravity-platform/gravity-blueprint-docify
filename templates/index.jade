@@ -9,14 +9,18 @@ html
         link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css")
         link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200")
         include _style.jade
+
     body
-        div.container
-            a(name="top")
-            include _navbar.jade
-            div.container#main
+        a(name="top")
+        include _navbar.jade
+        div.container#main
 
     script(src="//code.jquery.com/jquery-1.11.0.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
+    script#MainContent(type="text/html")
+        div.jumbotron
+            p.text-center
+                include:markdown ../README.md
     
     script.
       var files = JSON.parse('!{jsonFiles}'), currentRepo = '';
@@ -55,12 +59,15 @@ html
           }
           if (newRepo == "") {
             currentRepo = newRepo;
-            $('#main').html("");
+            $('#main').html(MainContent.textContent);
             toggleNavi();
           }
         });
-
         currentRepo = getCurrentRepo();
+        if (currentRepo == "") {
+          $('#main').html(MainContent.textContent);
+        }
+
         if (files.indexOf(currentRepo) != -1) {
           loadApi();
         }
