@@ -24,7 +24,7 @@ html
     
     script.
       var files = JSON.parse('!{jsonFiles}'), currentRepo = '';
-      var loadApi = function() {
+      var loadApi = function(callback) {
         currentRepo = getCurrentRepo();
         if (currentRepo != '') {
           $.get('/' + currentRepo + '/', function (response, status, xhr) {
@@ -34,6 +34,9 @@ html
             pageBody = pageBody.replace(/(<(h(1|2|3|4)|section) id=")/g, function(str, match) { return match +  currentRepo + "/" });
             toggleNavi();
             $('#main').html(pageBody);
+            if (typeof callback == 'function') {
+              callback();
+            }
           });
         }
       };
@@ -69,6 +72,10 @@ html
         }
 
         if (files.indexOf(currentRepo) != -1) {
-          loadApi();
+          loadApi(function() {
+            if (location.hash.substr(1) !== currentRepo) {
+              window.scrollTo(0, $(document.getElementById(location.hash.substr(1))).position().top);
+            }
+          });
         }
       });
