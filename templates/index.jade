@@ -21,8 +21,8 @@ html
     script.
       var files = JSON.parse('!{jsonFiles}'), currentRepo = '';
       var loadApi = function() {
+        currentRepo = getCurrentRepo();
         if (currentRepo != '') {
-          currentRepo = getCurrentRepo();
           $.get('/' + currentRepo + '/', function (response, status, xhr) {
             var pageBody = response.substring(response.indexOf("<body>"), response.indexOf("</body>"));
             pageBody = pageBody.replace(/href="#/g, "href=\"#" + currentRepo + "/");
@@ -49,11 +49,12 @@ html
         $(document).on('click', '.back-to-top', function() { window.scrollTo(0,0); return false; });
 
         $(window).on('hashchange', function(e) {
-          currentRepo = getCurrentRepo();
-          if (files.indexOf(currentRepo) != -1 && location.hash.indexOf(currentRepo) != -1) {
+          newRepo = getCurrentRepo();
+          if (files.indexOf(newRepo) != -1 && newRepo != currentRepo) {
             loadApi();
           }
-          if (currentRepo == "") {
+          if (newRepo == "") {
+            currentRepo = newRepo;
             $('#main').html("");
             toggleNavi();
           }
