@@ -48,7 +48,7 @@ var renderApiBlueprint = function (repo, blueprint) {
   });
 };
 
-var findApiRepos = function(callback) {
+var findApiRepos = function(callback, packageCallback) {
   fs.readdir(__dirname + '/node_modules', function (err, files) {
     if (err) {
       console.log(err);
@@ -56,9 +56,24 @@ var findApiRepos = function(callback) {
       files = files.filter(function(file) {
         return fs.existsSync(__dirname + '/node_modules/' + file + '/apiary.apib');
       });
+      var fileData = {};
+      _.each(files, function(file) {
+        fileData[file] = JSON.parse(fs.readFileSync(__dirname + '/node_modules/' + file + '/package.json', 'utf8'));
+      });
+      var menuGroups = [];
+      _.each(fileData, function(data) {
+        menuGroups = _.union(menuGroups, data.keywords);
+      });
+      menuGroups = menuGroups.filter(function(group) {
+        return group.substr(0, 4) == 'api-';
+      });
+      menuGroups = _.map(menuGroups, function (value) { return value.substr(4); });
+      console.log(menuGroups);
       var html = jade.compileFile(__dirname + '/templates/index.jade')({
         files: files,
-        jsonFiles: JSON.stringify(files)
+        jsonFiles: JSON.stringify(files),
+        fileData: JSON.stringify(fileData),
+        menuGroups: menuGroups
       });
       fs.writeFile(__dirname + '/build/index.html', html, function(err) {
         if (err) {

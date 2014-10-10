@@ -32,9 +32,9 @@ html
                 each apiFile in files
                     li.list-group-item.text-center
                         a(href="#" + apiFile)= "Graviton API: " + apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)
-    
     script.
       var files = JSON.parse('!{jsonFiles}'), currentRepo = '';
+      var fileData = !{fileData};
       var loadApi = function(callback) {
         currentRepo = getCurrentRepo();
         if (currentRepo != '') {
@@ -61,6 +61,9 @@ html
       var toggleNavi = function() {
         $('li.api-nav').each(function() {
           $(this).toggleClass('active', currentRepo != '' && this.children[0].href.indexOf(currentRepo) != -1);
+        });
+        $('li.dropdown').each(function() {
+          $(this).toggleClass('active', typeof fileData[currentRepo] != 'undefined' && typeof fileData[currentRepo].keywords == 'object' && fileData[currentRepo].keywords.indexOf('api-' + $(this).children('a')[0].textContent) != -1);
         });
       };
       $(document).ready(function() {

@@ -15,5 +15,16 @@ nav.navbar-default.navbar-liquid(role="navigation")
     .collapse.navbar-collapse.navbar-ex1-collapse
       ul.nav.navbar-nav
         each apiFile in files
-          li.api-nav
-            a(href="#" + apiFile)= apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)
+          if (JSON.parse(fileData)[apiFile].keywords && JSON.parse(fileData)[apiFile].keywords.indexOf("api-" + menuGroup) == 0) || !JSON.parse(fileData)[apiFile].keywords
+            li.api-nav
+              a(href="#" + apiFile)= apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)
+        each menuGroup in menuGroups
+          li.dropdown
+            a.dropdown-toggle(href="#" data-toggle="dropdown")= menuGroup
+              span.caret
+            ul.dropdown-menu(role="menu")
+              each apiFile in files
+                if JSON.parse(fileData)[apiFile].keywords
+                  if JSON.parse(fileData)[apiFile].keywords.indexOf("api-" + menuGroup) != -1
+                    li.api-nav
+                      a(href="#" + apiFile)= apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)
