@@ -6,10 +6,10 @@ style.
 style
     :stylus
         body, h4, h5
-            font-family 'Roboto' sans-serif !important
+            font-family sans-serif
 
         h1, h2, h3, .aglio
-            font-family 'Raleway' sans-serif !important
+            font-family sans-serif
 
         h1, h2, h3, h4, h5
             & a
@@ -18,10 +18,13 @@ style
             &:hover a
                 display inline
 
+        div.panel-body h4:not(:first-child)
+            margin-top 20px
+
         code
             color #444
             background-color #ddd
-            font-family 'Inconsolata' monospace !important
+            font-family monospace
 
         a[data-target]
             cursor pointer
