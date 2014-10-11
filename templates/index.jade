@@ -20,17 +20,16 @@ html
         div.jumbotron
             p.text-center
                 include:markdown ../README.md
-        div.container-fluid
-            h2.text-center="Browse our APIs"
-            hr
-            form#searchForm.form-inline(role="form" style="width:100%")
-                div.form-group.col-xm-14(style="width:100%")
-                     input#apiNameInput.form-control(type="text" placeholder="Search" style="width:100%")
-            hr
-            ul#apiList.list-group
-                each apiFile in files
-                    li.list-group-item.text-center
-                        a(href="#" + apiFile)= "Graviton API: " + apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)
+        h2.text-center="Browse our APIs"
+        hr
+        form#searchForm.form-inline(role="form" style="width:100%")
+            div.form-group.col-xm-14(style="width:100%")
+                 input#apiNameInput.form-control(type="text" placeholder="Search" style="width:100%")
+        hr
+        ul#apiList.list-group
+            each apiFile in files
+                li.list-group-item.text-center
+                    a(href="#" + apiFile)= "Graviton API: " + apiFile.substr(13, 1).toUpperCase() + apiFile.substr(14)
     script.
       var files = JSON.parse('!{jsonFiles}'), currentRepo = '';
       var fileData = !{fileData};
