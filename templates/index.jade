@@ -24,9 +24,9 @@ html
         div.container-fluid
             h2.text-center="Browse our APIs"
             hr
-            form.form-inline(role="form" style="width:100%")
+            form#searchForm.form-inline(role="form" style="width:100%")
                 div.form-group.col-xm-14(style="width:100%")
-                     input.form-control(type="text" id="searchInput" placeholder="Search" style="width:100%")
+                     input#apiNameInput.form-control(type="text" placeholder="Search" style="width:100%")
             hr
             ul#apiList.list-group
                 each apiFile in files
@@ -69,12 +69,14 @@ html
       $(document).ready(function() {
         $(document).on('click', '.back-to-top', function() { window.scrollTo(0,0); return false; });
 
-        $(document).on('keyup', '#searchInput', function() {
+        $(document).on('keyup', '#apiNameInput', function(event) {
           var query = this.value;
           $('#apiList li').each(function() {
             $(this).toggleClass('hidden', this.textContent.indexOf(query) == -1);
-            console.log(query); 
           });
+        });
+        $(document).on('submit', '#searchForm', function() {
+          location = $('#apiList li:not(.hidden):first a')[0].href;
         });
 
         $(window).on('hashchange', function(e) {
