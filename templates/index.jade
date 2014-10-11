@@ -43,6 +43,7 @@ html
             pageBody = pageBody.replace(/(<(h(1|2|3|4)|section) id=")/g, function(str, match) { return match +  currentRepo + "/" });
             toggleNavi();
             $('#main').html(pageBody);
+            $('#nav').before('<div class="navTitle text-center" style="display:none;"><h1><small>Graviton API</small></h1></div>');
             if (typeof callback == 'function') {
               callback();
             }
@@ -75,6 +76,14 @@ html
         });
         $(document).on('submit', '#searchForm', function() {
           location = $('#apiList li:not(.hidden):first a')[0].href;
+        });
+
+        $(window).scroll(function() {
+          if ($(window).scrollTop() > 60) {
+            $('.navTitle').show();                               
+          } else {
+            $('.navTitle').hide();                               
+          }
         });
 
         $(window).on('hashchange', function(e) {
