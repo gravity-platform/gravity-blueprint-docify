@@ -24,13 +24,17 @@ Add a ``package.json`` to the repository containing your API blueprint.
     "url": "https://github.com/libgraviton/graviton-api-example.git"
   },
   "license": "GPL",
-  "homepage": "https://github.com/libgraviton/graviton-api-example"
+  "homepage": "https://github.com/libgraviton/graviton-api-example",
+  "keywords": ["api-Legacy"]
 }
 ````
 
 Remember to use a version higher than 1.x if the API is currently being used on
 production anywhere. You will be using this version string to convey meaning
 about any further releases as per [semver specs](http://semver.org).
+
+Don't forget to change or add a keywords entry. The entry gets used to sort the
+apiaries into the main menu on https://graviton-apidoc.beta.scapp.io.
 
 Add a webhook to the graviton-api-example repository and point it to ``http://graviton-apidoc.beta.scapp.io/github.hook``.
 
