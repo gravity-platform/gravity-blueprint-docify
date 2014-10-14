@@ -1,6 +1,6 @@
 {
   "name": "gravity-blueprint-docify",
-  "version": "0.1.0",
+  "version": "0.2.0-dev",
   "description": "run blueprint-docify on multiple repos",
   "main": "index.js",
   "scripts": {
